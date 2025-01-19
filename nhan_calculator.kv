@@ -1,0 +1,289 @@
+MDScreen:
+    md_bg_color: '#464644'
+    MDBoxLayout:
+        size_hint: 1, 1
+        orientation: 'vertical'
+        md_bg_color: '#464646'
+
+        MDBoxLayout:
+            size_hint: 1, 0.17
+            orientation: 'horizontal'
+            md_bg_color: '#464646'
+
+            MDLabel:
+                id: screen
+                text: "0"
+                halign: "right"
+                font_size: self.height * 0.4
+                color: '#ffffff'
+
+        MDBoxLayout:
+            size_hint: 1, 0.17
+            orientation: 'horizontal'
+            md_bg_color: '#464646'
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                md_bg_color: "#A4A4A4"  # Color for the circle
+                text: "AC"
+                valign: "center"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "AC")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                md_bg_color: "A4A4A4"
+                text: "+/-"
+                valign: "center"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "pm")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "%"
+                md_bg_color: "#A4A4A4"
+                valign: "center"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "%")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                md_bg_color: "#FE9E00"
+                text: "÷"
+                valign: "center"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "/")
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            md_bg_color: '#464646'
+            size_hint: 1, 0.17
+            spacing: 0.025  # Add spacing between children
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "7"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "7")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "8"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "8")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "9"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "9")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "×"
+                valign: "center"
+                font_size: self.height * 0.4
+                md_bg_color: "#FE9E00"
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "*")
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            md_bg_color: '#464646'
+            size_hint: 1, 0.17
+            spacing: 0.025  # Add spacing between children
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "4"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "4")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "5"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "5")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "6"
+                md_bg_color: "#333333"
+                valign: "center"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "6")
+
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "−"
+                valign: "center"
+                md_bg_color: "#FE9E00"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "-")
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            md_bg_color: '#464646'
+            size_hint: 1, 0.17
+            spacing: 0.025  # Add spacing between children
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "1"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "1")
+
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "2"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "2")
+
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "3"
+                valign: "center"
+                md_bg_color: "#333333"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "3")
+
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "+"
+                valign: "center"
+                md_bg_color: "#FE9E00"
+                font_size: self.height * 0.4
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "+")
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            md_bg_color: '#464646'
+            size_hint: 1, 0.17
+            spacing: 0.025  # Add spacing between children
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: ":D"
+                valign: "center"
+                font_size: self.height * 0.4
+                md_bg_color: "#333333"
+                radius: [100]
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "0"
+                valign: "center"
+                font_size: self.height * 0.4
+                md_bg_color: "#333333"
+                radius: [100]
+                on_press:
+                    app.update_screen(message = "0")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "."
+                valign: "center"
+                font_size: self.height * 0.4
+                radius: [100]
+                md_bg_color: "#333333"
+                on_press:
+                    app.update_screen(message = ".")
+
+            MDFillRoundFlatButton:
+                size_hint: 1, 1
+                text_color: "white"
+                style: "filled"
+                text: "="
+                valign: "center"
+                font_size: self.height * 0.4
+                md_bg_color: "#FE9E00"
+                radius: [100]
+                on_press:
+                    app.get_result()
