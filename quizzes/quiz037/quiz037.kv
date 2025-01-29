@@ -1,0 +1,162 @@
+MDScreen:
+    md_bg_color: '#ffffff'
+    MDBoxLayout:
+        size_hint: 0.7, 0.8
+        pos_hint: {"center_x": 0.5, "center_y": .5}
+        orientation: 'vertical'
+        md_bg_color: '#ffffff'
+
+        MDLabel:
+            id: title
+            text: "Tic Tac Toe by Nhan"
+            halign: "center"
+            size_hint: 1, 0.1
+            font_size: "40pt"
+            color: '#000000'
+        MDLabel:
+            id: turn
+            text: "It is X's turn"
+            halign: "center"
+            size_hint: 1, 0.1
+            font_size: "26pt"
+            color: '#000000'
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 0.5
+            MDBoxLayout:
+                orientation: 'horizontal'
+                md_bg_color: '#464646'
+                size_hint: 1, 0.17
+                spacing: 0.025
+
+                MDRaisedButton:
+                    id: 0
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    md_bg_color: "#42a7f5"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "0")
+
+                MDRaisedButton:
+                    id: 1
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    md_bg_color: "#42a7f5"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "1")
+
+                MDRaisedButton:
+                    id: 2
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    md_bg_color: "#42a7f5"
+                    valign: "center"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "2")
+            MDBoxLayout:
+                orientation: 'horizontal'
+                md_bg_color: '#464646'
+                size_hint: 1, 0.17
+                spacing: 0.025
+
+                MDRaisedButton:
+                    id: 3
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    md_bg_color: "#42a7f5"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "3")
+
+
+                MDRaisedButton:
+                    id: 4
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    md_bg_color: "#42a7f5"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "4")
+
+
+                MDRaisedButton:
+                    id: 5
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    md_bg_color: "#42a7f5"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "5")
+
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+                md_bg_color: '#464646'
+                size_hint: 1, 0.17
+                spacing: 0.025
+
+
+                MDRaisedButton:
+                    id: 6
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    font_size: self.height * 0.4
+                    md_bg_color: "#42a7f5"
+                    radius: [10]
+                    on_press:
+                        app.update_screen(message = "6")
+
+                MDRaisedButton:
+                    id: 7
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    md_bg_color: "#42a7f5"
+                    on_press:
+                        app.update_screen(message = "7")
+
+                MDRaisedButton:
+                    id: 8
+                    size_hint: 1, 1
+                    text_color: "white"
+                    style: "filled"
+                    text: ""
+                    valign: "center"
+                    font_size: self.height * 0.4
+                    radius: [10]
+                    md_bg_color: "#42a7f5"
+                    on_press:
+                        app.update_screen(message = "8")
