@@ -1,0 +1,52 @@
+ScreenManager: # keep this name
+    id: scr_manager
+    MysteryPageA:
+        name: "MysteryPageA"
+
+
+    MysteryPageB:
+
+
+<MysteryPageA>
+    MDLabel:
+        id: hello
+        text: ""
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        MDRaisedButton:
+            size_hint: .5, .1
+            text: "message1"
+            md_bg_color: "#e63980"
+            on_press:
+                root.message1()
+
+        MDRaisedButton:
+            size_hint: .5, .1
+            text: "next"
+            md_bg_color: "#e63980"
+            on_press:
+                root.next()
+
+<MysteryPageB>
+    name: "MysteryPageB"
+
+    MDLabel:
+        id: helloe
+        text: ""
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        MDRaisedButton:
+            size_hint: .5, .1
+            text: "message2"
+            md_bg_color: "#e63980"
+            on_press:
+                root.message2()
+
+        MDRaisedButton:
+            size_hint: .5, .1
+            text: "back"
+            md_bg_color: "#e63980"
+            on_press:
+                root.back()
