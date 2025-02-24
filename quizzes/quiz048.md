@@ -1,4 +1,4 @@
-<img width="405" alt="image" src="https://github.com/user-attachments/assets/36f429f8-021a-47ff-8064-06bf874ee50a" /># Paper Code
+# Paper Code
 <img width="405" alt="image" src="https://github.com/user-attachments/assets/a8edb105-b9e0-4e66-8979-7e924af29370" />
 
 # Code
