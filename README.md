@@ -19,6 +19,9 @@
 ## System Diagram
 ![image](https://github.com/user-attachments/assets/4d99e418-e7dd-45dd-bf90-9334d3abbdc2)
 
+## UML Diagram
+![image](https://github.com/user-attachments/assets/943f6689-d96e-4695-be37-63ddad2ab3ad)
+
 ## Record of Tasks
 | Task Number | Planned Action | Planned Outcome | Time Estimated | Target Completion Date | Criterion |
 |-------------|---------------|-----------------|----------------|------------------------|-----------|
