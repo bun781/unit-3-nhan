@@ -5,11 +5,11 @@
       <img src="https://github.com/user-attachments/assets/c3a995d9-ebb6-4e24-9716-45f2199b7ee2" height="1200">
       <p>Fig x. Flow diagram of the software's login method from the LoginScreen class that can differentiate between employees and customer<\p>
     </td>
-    <td width="32.5%" valign="top" align="center">
+    <td width="26%" valign="top" align="center">
       <img src="https://github.com/user-attachments/assets/4692d369-d84d-4853-a196-434c2446a2a6" height="1200">
       <p>Fig x. Flow diagram of the software's method to add new items to any table of the database<\p>
     </td>
-    <td width="32.5%" valign="top" align="center">
+    <td width="29%" valign="top" align="center">
       <img src="https://github.com/user-attachments/assets/a6d1c5db-ae16-4a78-bc61-9c7e36876585" height="1200">
       <p>Fig x. Flow diagra of the software's method that can send and store customer's order in the database<\p>
     </td>
