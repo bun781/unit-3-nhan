@@ -1,3 +1,22 @@
+# Criterion A: Planning
+## Problem Definition
+My client is an old local restaurateur with a chain of restaurants around the city. Lately, he noticed that the number of customers visiting his restaurants are decreasing since online food ordering and delivering services are on the rise. My client wants to be able to update his service so that the restaurant can compete with these platforms. The restaurant currently only has food delivery via orders done through the phone, but my client said that they refrain from doing so because it provides no written record of the orders. He also said that it generally hurts the relationship between the restaurants and customers because there is nothing recording the order. Furthermore, he said that these disagreements usually start because customers do not know what the dishes look like, nor which ingredients were in it. And as users usually underestimate the cost of delivery to their location, they usually disagree at the food delivery fees. The problem also expands to staff’s reliability in pricing through phones, as they might read the wrong price. He said that whether or not it is accidentally or deliberately, a situation like such should never happen. My client said that most importantly, the restaurant can’t keep track of who is making the calls. He said that the restaurant chain prides on having the best customer service program. Lastly, he requested that the solution should accommodate for his ever expanding restaurant network and food listings.
+
+## Proposed Solution
+I propose an application that has a graphic user interface (GUI) allowing users to order their food without the compromises of ordering through phone calls, allowing the restaurant to reliably keep track of the orders.
+Python is an interpreted language that is compatible with both Intel x86 and ARM across multiple operating systems. This in addition to Python robust community support and wide range of available libraries allows it to be a great choice for efficiently creating applications that work across multiple platforms.
+The graphic framework Kivy and the extension KivyMD will be used to create the GUI for the application. One reason was because Kivy allows responsive design, an important feature when customer’s devices can have varying aspect ratios. Another reason was that KivyMD has Kivy elements that follows Google’s Material Design language, allowing it to appear native and professional. Moreover, Kivy and KivyMD were specifically designed to be implemented with Python, making the development more efficient, streamlined, and minimize unexpected behaviour.
+The data storage solution will use SQLite. Relational database tools like SQL are preferred over simple storage options such as CSV or JSON files, as data stored is relatively complex and interrelated. SQLite was selected because it is lightweight and embedded, allowing users to quickly access data even when not having stable connections. It also does not require a lot of storage nor a dedicated server, resources that are excessive for the application and require additional operating cost for my client.
+
+## Success Criteria
+- The application has a login and register functions for both users and employees.
+- The application allows users to order food and securely save the order to a database.
+- The application allows users to select their location through a map.
+- The application allows employees to view orders made by customers.
+- The employee accounts can add or modify food listings to the software and restaurant locations to the map.
+
+# Criterion B: Design
+
 ## Flow Diagrams
 ![image](https://github.com/user-attachments/assets/c3a995d9-ebb6-4e24-9716-45f2199b7ee2)
 
