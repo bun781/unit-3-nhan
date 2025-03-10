@@ -4,8 +4,11 @@ My client is an old local restaurateur with a chain of restaurants around the ci
 
 ## Proposed Solution
 I propose an application that has a graphic user interface (GUI) allowing users to order their food without the compromises of ordering through phone calls, allowing the restaurant to reliably keep track of the orders.
+
 Python is an interpreted language that is compatible with both Intel x86 and ARM across multiple operating systems. This in addition to Python robust community support and wide range of available libraries allows it to be a great choice for efficiently creating applications that work across multiple platforms.
+
 The graphic framework Kivy and the extension KivyMD will be used to create the GUI for the application. One reason was because Kivy allows responsive design, an important feature when customer’s devices can have varying aspect ratios. Another reason was that KivyMD has Kivy elements that follows Google’s Material Design language, allowing it to appear native and professional. Moreover, Kivy and KivyMD were specifically designed to be implemented with Python, making the development more efficient, streamlined, and minimize unexpected behaviour.
+
 The data storage solution will use SQLite. Relational database tools like SQL are preferred over simple storage options such as CSV or JSON files, as data stored is relatively complex and interrelated. SQLite was selected because it is lightweight and embedded, allowing users to quickly access data even when not having stable connections. It also does not require a lot of storage nor a dedicated server, resources that are excessive for the application and require additional operating cost for my client.
 
 ## Success Criteria
