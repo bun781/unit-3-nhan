@@ -1,3 +1,18 @@
+<table width="100%">
+  <tr>
+    <td width="33%" valign="top">
+      <img src="https://github.com/user-attachments/assets/449ae740-a64c-48a0-af25-8c3679a38538" height="300">
+    </td>
+    <td width="33%" valign="top">
+      <img src="https://github.com/user-attachments/assets/3ad2a009-7269-417c-b5e2-eb7204befe7b" height="300">
+    </td>
+    <td width="33%" valign="top">
+      <img src="https://github.com/user-attachments/assets/4a6eb614-540e-46b6-acc9-26632566c102" height="300">
+    </td>
+  </tr>
+</table>
+
+
 | Task Number | Planned Action | Planned Outcome | Time Estimated | Target Completion Date | Criterion |
 |-------------|---------------|-----------------|----------------|------------------------|-----------|
 | 1  | First meeting with client | Have a clear problem definition | 10 minutes | Jan 30 | A |
