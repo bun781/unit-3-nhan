@@ -1,18 +1,25 @@
+## Flow Diagrams
 <table width="100%">
   <tr>
-    <td width="33%" valign="top">
-      <img src="https://github.com/user-attachments/assets/449ae740-a64c-48a0-af25-8c3679a38538" height="300">
+    <td width="33%" valign="top" align="center">
+      <img src="https://github.com/user-attachments/assets/449ae740-a64c-48a0-af25-8c3679a38538" height="1200">
+      <p>Fig x. Flow diagram of the software's login method from the LoginScreen class that can differentiate between employees and customer<\p>
     </td>
-    <td width="33%" valign="top">
-      <img src="https://github.com/user-attachments/assets/3ad2a009-7269-417c-b5e2-eb7204befe7b" height="300">
+    <td width="33%" valign="top" align="center">
+      <img src="https://github.com/user-attachments/assets/3ad2a009-7269-417c-b5e2-eb7204befe7b" height="1200">
+      <p>Fig x. Flow diagram of the software's method to add new items to any table of the database<\p>
     </td>
-    <td width="33%" valign="top">
-      <img src="https://github.com/user-attachments/assets/4a6eb614-540e-46b6-acc9-26632566c102" height="300">
+    <td width="33%" valign="top" align="center">
+      <img src="https://github.com/user-attachments/assets/937205b0-1fb9-4ec1-9b39-84e5f5847311" height="1200">
+      <p>Fig x. Flow diagra of the software's method that can send and store customer's order in the database<\p>
     </td>
   </tr>
 </table>
+        
+## System Diagram
+![image](https://github.com/user-attachments/assets/4d99e418-e7dd-45dd-bf90-9334d3abbdc2)
 
-
+## Record of Tasks
 | Task Number | Planned Action | Planned Outcome | Time Estimated | Target Completion Date | Criterion |
 |-------------|---------------|-----------------|----------------|------------------------|-----------|
 | 1  | First meeting with client | Have a clear problem definition | 10 minutes | Jan 30 | A |
