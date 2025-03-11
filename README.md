@@ -87,7 +87,30 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 ## Success Criteria 4 & 5: Inheriting template classes to allow user-friendly access to the database.
 As stated in the proposed solution, data about user orders, food listings, and restaurants are stored in an SQLite database. Additionally, success critera 4 & 5 requires that employee accounts can modify customer orders, in addition to modify information about food listings and retaurants. Therefore, to complete these two success criteria, the software needs to provide a way for the users to edit the database via its graphic interface.
 
-The kivyMD framework 
+Firstly, to view the data, the kivyMD framework provides a table widget through the MDDataTable class. When initialized, this class requires a list containing the column name as well as another list containing the data of each row, as shown in the code below.
+```.py
+self.data_table = MDDataTable(
+    column_data = self.column_data, # self.column_data is a list of column name
+    row_data = self.row_data, # self.row_data is a list of row data.
+
+    # formatting code that does not depend on information inserted
+    size_hint = (0.9, 0.8),
+    pos_hint = {"center_x": 0.5, "center_y": 0.5},
+    use_pagination = True, # data is cleanly divided into pages
+    rows_num = 10  # show 10 rows per page
+)
+```
+
+This is great tool to display the database information because the code for the graphic widget is independent of the table data. Such independence means that each data table that the employee need access to (orders, food listing, and restaurants), can easily be deployed through changing the column name list, `.py self.column_data`, and the row data list, `.py self.row_data`. Constructing the tables through this method not only allows for the tables to have a consistent style, it also allows developers to add additional tables in the future.
+
+```.py
+    def get_row_data(self):
+        db = DatabaseManager('database.db')
+        row_data = db.execute(self.row_query)
+        print(len(row_data))
+        db.close()
+        return row_data
+```
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
     def __init__(self, **kwargs):
@@ -146,16 +169,7 @@ def add_row(self, not_needed_data):
     self.dialog_add.dismiss()
     MDDialog(title="Item successfully added!").open()
 ```
-```.py
-self.data_table = MDDataTable(
-    size_hint=(0.9, 0.8),
-    pos_hint={"center_x": 0.5, "center_y": 0.5},
-    column_data=self.column_data,
-    use_pagination=True,
-    row_data=self.row_data,
-    rows_num=10
-)
-```
+
 
 ## Map
 ```.py
