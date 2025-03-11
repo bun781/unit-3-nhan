@@ -35,6 +35,14 @@ The data storage solution will use SQLite. Relational database tools like SQL ar
     **Quote from the problem definition:** "requested that the solution should accommodate for his ever expanding restaurant network and food listings"
 
 # Criterion B: Design
+## Test Plan
+| Test Case | Procedure | Planned Outcome | Success Criteria |
+|:---------|:----------|-----------------|------------------|
+| **1** | 1. Run the program and enter `"a"` into `"username"` on login screen, and `"a"` into `"password"`.<br>2. Stop the program and rerun it.<br>3. Run the program and register a new account.<br>4. Use the credentials created in the previous step to log in. | - After the first step, the tester should see a screen with a menu that leads to order lists, food listings, and restaurant list.<br>- When the test ends, the tester is on the user screen with cards that display food listings. | The application has a login function for both users and employees and a register function for users. |
+| **2** | 1. Run the program, log in or register, then log into the application. | - The tester can see every food listing organized into cards on the screen. | The application allows users to see every detail about food listings. |
+| **3** | 1. Run the program, log in or register, then log into the application.<br>2. Click on the items that the tester wants to add to the order.<br>3. Click the `"View Cart"` button at the bottom of the screen.<br>4. Click `"Confirm Order"`.<br>5. Dismiss the dialog.<br>6. Select location on the map.<br>7. Select a different location on the map.<br>8. Click `"Confirm Order"`. | - After completing step 2, the tester should be moved into a screen with a map.<br>- After completing step 3, a dialog appears and states that the user needs to select their location.<br>- After completing step 8, a dialog appears and states that the order has been successfully placed. | The application allows users to select their location through a map. |
+| **4** | 1. Complete test case 3.<br>2. Stop the program.<br>3. Run the program again and input `"a"` as username and `"a"` as password.<br>4. Click on the button that says `"Order archive"`. | - The order placed by the tester appears in the table shown in the order archive screen. | The application allows users to send their orders to a database which employees have access to. |
+| **5** | 1. Run the program and input `"a"` as username and `"a"` as password.<br>2. Click the button that says `"Restaurant list"`.<br>3. Click on any row, modify the data in the row.<br>4. Stop the program.<br>5. Run the program and input `"a"` as username and `"a"` as password.<br>6. Click the button that says `"Restaurant list"`.<br>7. Add a new restaurant via the `"Add new"` button.<br>8. Stop the program.<br>9. Run the program, log in or register, then log into the application.<br>10. Choose a food item and click the `"View Cart"` button. | - After step 6, the tester will see that the row that they modified retained its modification even after a program restart.<br>- After step 10, the tester will see that the new location they added appears on the map. | The employee accounts can add or modify food listings in the software and restaurant locations on the map. |
 
 ## Flow Diagrams
 ![image](https://github.com/user-attachments/assets/c3a995d9-ebb6-4e24-9716-45f2199b7ee2)
@@ -91,7 +99,7 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 | 28 | Add function to save new row and modified row to database | Data from table can be correctly saved to the database | 20 minutes | March 9 | C |
 | 29 | Verify that text fields only accept the type of data they should accept | Minimize the risk that calculations and functions that use data from these text fields deviate from what they are supposed to perform | 40 minutes | March 9 | C |
 | 30 | Add hint and error texts to text fields | Improve the user experience | 30 minutes | March 9 | C |
-| 31 | Run tests | Run tests in accordance with the test plan | 20 minutes | March 10 | B/C/D |
+| 31 | Run tests in accordance to the test plan| Run tests in accordance with the test plan | 20 minutes | March 10 | B/C/D |
 | 32 | Add a function that allows users to remove items from their cart | Users can effectively manage their cart, fulfilling feedback from client | 45 minutes | March 10 | C |
 | 33 | Create demonstration video for my product | Verify that my product works in its entirety | 45 minutes | March 11 | D |
 | 34 | Add additional comments to clarify my code | Increase ease of possible future modifications | 20 minutes | March 11 | D |
