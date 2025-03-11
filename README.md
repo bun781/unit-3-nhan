@@ -83,8 +83,11 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 
 
 # Criterion C: Development
-## Inheritance
 
+## Success Criteria 4 & 5: Inheriting template classes to allow user-friendly access to the database.
+As stated in the proposed solution, data about user orders, food listings, and restaurants are stored in an SQLite database. Additionally, success critera 4 & 5 requires that employee accounts can modify customer orders, in addition to modify information about food listings and retaurants. Therefore, to complete these two success criteria, the software needs to provide a way for the users to edit the database via its graphic interface.
+
+The kivyMD framework 
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
     def __init__(self, **kwargs):
@@ -99,6 +102,7 @@ class EmployeeRestaurantList(EmployeeTemplate):
         kwargs["id_name"] = "restaurant_id"
         super().__init__(**kwargs)
 ```
+
 ```.py
 def show_edit_dialog(self):
     self.dialog_content = MDBoxLayout(orientation="vertical", spacing=10, size_hint_y=None, height=600)
@@ -119,6 +123,7 @@ def show_edit_dialog(self):
     )
     self.dialog.open()
 ```
+
 ```.py
 def add_row(self, not_needed_data):
     db = DatabaseManager('database.db')
