@@ -84,6 +84,7 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 
 # Criterion C: Development
 ## Inheritance
+
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
     def __init__(self, **kwargs):
@@ -217,5 +218,116 @@ def on_pre_enter(self, *args):
         card = self.create_card(food)
         self.ids.container.add_widget(card)
     db.close()
+```
+```.py
+    def place_order(self, food_id):
+        db = DatabaseManager(name = "database.db")
+        query = f'''
+        SELECT * FROM food_listing
+        WHERE food_id = {food_id}
+        '''
+        food = db.execute(query=query)
+        CustomerDashboard.order.append(food)
+        print(CustomerDashboard.order)
+        self.ids.cart.text = f'View cart: {len(CustomerDashboard.order)} items, ¥{sum(float(re.sub(r"[^0-9.]", "", str(food[0][1]))) for food in CustomerDashboard.order):.2f}'
+        print(CustomerDashboard.order)
+```
+```.py
+    def create_card(self, food):
+        card = MDCard(
+            size_hint=(None, None),
+            size=("350dp", "110dp"),
+            radius=[30],
+            elevation=2,
+            pos_hint={"center_x": 0.5},
+            on_release = lambda x: self.place_order(food[0])
+        )
+
+        layout = MDBoxLayout(
+            orientation="horizontal",
+            spacing="8dp",
+            padding=("10dp", "5dp"),
+            size_hint_y=None,
+            height=card.height,
+            pos_hint={"center_x": 0.5, "center_y": 0.5}
+        )
+
+        # Image container
+        image_card = MDCard(
+            size_hint=(None, None),
+            size=("80dp", "80dp"),
+            radius=[35],
+            elevation=0,
+            pos_hint={"center_y": 0.5}
+        )
+
+        # FitImage without invalid properties
+        image = FitImage(
+            source=f"{food[4]}",
+            size_hint=(1, 1),
+        )
+
+        image_card.add_widget(image)
+
+        # Right section (Text)
+        right_section = MDBoxLayout(
+            orientation="vertical",
+            spacing="4dp",  # Slightly more space
+            size_hint_y=None,
+            adaptive_height=True,
+            pos_hint={"center_y": 0.5}
+        )
+
+        title_label = MDLabel(
+            text=f"{food[6]}",
+            bold=True,
+            font_style="H5",
+            halign="left",
+            size_hint_y=None,
+            adaptive_height=True,
+            font_size="18sp",
+            valign="middle",
+        )
+
+        # Description and price in one line
+        description_container = MDBoxLayout(
+            orientation="horizontal",
+            spacing="6dp",  # Just a tiny bit more space
+            size_hint_y=None,
+            adaptive_height=True
+        )
+
+        description_label = MDLabel(
+            text=f"{food[2]}",
+            theme_text_color="Hint",
+            size_hint_y=None,
+            adaptive_height=True,
+            valign="middle",
+        )
+
+        price_label = MDLabel(
+            text=f'¥{float(re.sub(r"[^0-9.]", "", str(food[1])))}',
+            theme_text_color="Secondary",
+            font_size="12sp",
+            size_hint=(None, None),
+            size=("60dp", "20dp"),  # Just  tiny bit wider
+            valign="middle",
+            halign="right",
+        )
+
+
+        # Add description and price to the container
+        description_container.add_widget(description_label)
+        description_container.add_widget(price_label)
+
+        # Add elements to right section
+        right_section.add_widget(title_label)
+        right_section.add_widget(description_container)
+
+        layout.add_widget(image_card)
+        layout.add_widget(right_section)
+        card.add_widget(layout)
+
+        return card
 ```
 
