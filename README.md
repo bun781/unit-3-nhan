@@ -5,7 +5,7 @@
 My client is an old local restaurateur with a chain of restaurants around the city. Lately, he noticed that the number of customers visiting his restaurants are decreasing since online food ordering and delivering services are on the rise. My client wants to be able to update his service so that the restaurant can compete with these platforms. The restaurant currently only has food delivery via orders done through the phone, but my client said that they refrain from doing so because it provides no written record of the orders. He also said that it generally hurts the relationship between the restaurants and customers because there is nothing recording the order. Furthermore, he said that these disagreements usually start because customers do not know what the dishes look like, nor which ingredients were in it. And as users usually underestimate the cost of delivery to their location, they usually disagree at the food delivery fees. The problem also expands to staff’s reliability in pricing through phones, as they might read the wrong price. He said that whether or not it is accidentally or deliberately, a situation like such should never happen. My client said that most importantly, the restaurant can’t keep track of who is making the calls. He said that the restaurant chain prides on having the best customer service program. Lastly, he requested that the solution should accommodate for his ever expanding restaurant network and food listings.
 
 ## Proposed Solution
-I propose an application that has a graphic user interface (GUI) allowing users to order their food without the compromises of ordering through phone calls, allowing the restaurant to reliably keep track of the orders.
+I propose an application that has a graphic user interface (GUI) allowing users to order their food without the compromises of ordering through phone calls; meaning that the restaurant can reliably keep track of the orders, and users can order food knowing exactly what they ordered and where to deliver to. Additionally, it also allows the restaurants employee to edit food listing and restaurant informations to accomodate for the expanding restaurant network.
 
 Python is an interpreted language that is compatible with both Intel x86 and ARM across multiple operating systems. This in addition to Python robust community support and wide range of available libraries allows it to be a great choice for efficiently creating applications that work across multiple platforms.
 
@@ -15,10 +15,19 @@ The data storage solution will use SQLite. Relational database tools like SQL ar
 
 ## Success Criteria
 1. The application has a login and register functions for both users and employees.
-2. The application allows users to order food and securely save the order to a database.
-3. The application allows users to select their location through a map.
-4. The application allows employees to view orders made by customers.
-5. The employee accounts can add or modify food listings to the software and restaurant locations to the map.
+   **Quote from problem defintion:** "My client said that most importantly, the restaurant can’t keep track of who is making the calls", "there is no one or nothing recording the order"
+   
+3. The application allows users to see every detail about food listing.
+   **Quote from the problem definition:** "disagreements usually start because customers do not know what the dishes look like, nor which ingredients were in it"
+
+5. The application allows users to select their location through a map.
+   **Quote from the problem definition:** "And as users usually underestimate the cost of delivery to their location, they usually disagree at the food delivery fees"
+   
+7. The application allows users to send their orders to a database which employees have access to.
+    **Quote from the problem definition:** "it [order through phones] generally hurts the relationship between the restaurants and customers because there is no one or nothing recording the order"
+   
+9. The employee accounts can add or modify food listings to the software and restaurant locations to the map.
+    **Quote from the problem definition:** "requested that the solution should accommodate for his ever expanding restaurant network and food listings"
 
 # Criterion B: Design
 
