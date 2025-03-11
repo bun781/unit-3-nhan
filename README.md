@@ -87,11 +87,12 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 ## Success Criteria 4 & 5: Inheriting template classes to allow user-friendly access to the database.
 As stated in the proposed solution, data about user orders, food listings, and restaurants are stored in an SQLite database. Additionally, success critera 4 & 5 requires that employee accounts can modify customer orders, in addition to modify information about food listings and retaurants. Therefore, to complete these two success criteria, the software needs to provide a way for the users to edit the database via its graphic interface.
 
-Firstly, to view the data, the kivyMD framework provides a table widget through the MDDataTable class. When initialized, this class requires a list containing the column name as well as another list containing the data of each row, as shown in the code below.
+Firstly, to view the data, the kivyMD framework provides a table widget through the MDDataTable class. When initialized, this class requires a list containing the column name as well as another list containing the data of each row, which can be retrieved from the database. The code belows shows the initialization of the data table in the software.
+
 ```.py
 self.data_table = MDDataTable(
-    column_data = self.column_data, # self.column_data is a list of column name
-    row_data = self.row_data, # self.row_data is a list of row data.
+    column_data = self.column_data, # self.column_data is a list of column name, inputted by the user
+    row_data = self.row_data, # self.row_data is a list of row data, retrieved via a query to the application's database
 
     # formatting code that does not depend on information inserted
     size_hint = (0.9, 0.8),
@@ -101,16 +102,21 @@ self.data_table = MDDataTable(
 )
 ```
 
-This is great tool to display the database information because the code for the graphic widget is independent of the table data. Such independence means that each data table that the employee need access to (orders, food listing, and restaurants), can easily be deployed through changing the column name list, `.py self.column_data`, and the row data list, `.py self.row_data`. Constructing the tables through this method not only allows for the tables to have a consistent style, it also allows developers to add additional tables in the future.
+This is great way to display the database information because the code for the graphic widget is independent of the table data, meaning that each data table that the employee need access to (orders, food listing, and restaurants), can easily be deployed through changing the column name list, `.py self.column_data`, and the row data list, `.py self.row_data`. 
+
+Constructing the tables through this method not only allows for the current tables to have a consistent style, it also allows developers to easily add additional tables by simply changing the column and row data, while also maintaining consistency in design.
+
+`.py self.column_data` should be written in manually by the developer, as not every column stored in the database, such as confirmation hashes or id need or should be displayed. Nevertheless, `.py self.row_data` can be retrieved directly from the SQLite database through the `.py get_row_data` method, which queries the database on the row data, allowing for the swift retrieval of data.
 
 ```.py
     def get_row_data(self):
-        db = DatabaseManager('database.db')
-        row_data = db.execute(self.row_query)
-        print(len(row_data))
+        db = DatabaseManager('database.db') # connect with the database
+        row_data = db.execute(self.row_query) # self.row_query is inputted by the user
         db.close()
         return row_data
 ```
+
+
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
     def __init__(self, **kwargs):
