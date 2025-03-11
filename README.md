@@ -97,7 +97,44 @@ class EmployeeRestaurantList(EmployeeTemplate):
         kwargs["id_name"] = "restaurant_id"
         super().__init__(**kwargs)
 ```
-
+```.py
+# Burger Menu Button (Opens Dropdown)
+MDIconButton:
+    icon: "menu" 
+    size_hint_x: None
+    width: "50dp"
+    on_release: app.root.get_screen("{self.screen_name}").open_menu(self)
+```
+```.py
+    def show_edit_dialog(self):
+        self.dialog_content = MDBoxLayout(orientation="vertical", spacing=10, size_hint_y=None, height=600)
+        self.text_fields = []
+        self.row_values = self.row_data[self.selected_row_index]  # Get selected row values
+        for i, column in enumerate(self.column_data[:-1]): # id is excluded
+            text = str(self.row_values[i]) # # make sure eveyrthing is a stirng
+            text_field = MDTextField(hint_text=f"{column[0]}", text=text)
+            self.text_fields.append(text_field)
+            self.dialog_content.add_widget(text_field)
+        self.dialog = MDDialog(
+            type="custom",
+            content_cls=self.dialog_content,
+            buttons=[
+                MDRaisedButton(text="Save", on_release=self.save_data),
+                MDRaisedButton(text="Cancel", on_release=lambda x: self.dialog.dismiss()),
+            ],
+        )
+        self.dialog.open()
+```
+```.py
+self.data_table = MDDataTable(
+    size_hint=(0.9, 0.8),
+    pos_hint={"center_x": 0.5, "center_y": 0.5},
+    column_data=self.column_data,
+    use_pagination=True,
+    row_data=self.row_data,
+    rows_num=10
+)
+```
 ```.py
     def on_pre_enter(self, *args):
         self.ids.container.clear_widgets()  # Avoid duplication when re-entering
@@ -147,3 +184,4 @@ class LineLayer(MapLayer):
             x2, y2 = mapview.get_window_xy_from(lat=self.point_b[0], lon=self.point_b[1], zoom=mapview.zoom)
             Line(points=[x1, y1, x2, y2], width=4)  # Increased line thickness
 ```
+
