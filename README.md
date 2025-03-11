@@ -91,7 +91,7 @@ Firstly, to view the data, the kivyMD framework provides a table widget through 
 
 ```.py
 self.data_table = MDDataTable(
-    column_data = self.column_data, # self.column_data is a list of column name, inputted by the user
+    column_data = self.column_data, # self.column_data is a list of column name, should be written in manually by the developer, as not every column stored in the database, such as confirmation hashes or id need or should be displayed.
     row_data = self.row_data, # self.row_data is a list of row data, retrieved via a query to the application's database
 
     # formatting code that does not depend on information inserted
@@ -106,8 +106,7 @@ This is great way to display the database information because the code for the g
 
 Constructing the tables through this method not only allows for the current tables to have a consistent style, it also allows developers to easily add additional tables by simply changing the column and row data, while also maintaining consistency in design.
 
-`.py self.column_data` should be written in manually by the developer, as not every column stored in the database, such as confirmation hashes or id need or should be displayed. Nevertheless, `.py self.row_data` can be retrieved directly from the SQLite database through the `.py get_row_data` method, which queries the database on the row data, allowing for the swift retrieval of data.
-
+`.py self.row_data` can be retrieved directly from the SQLite database through the `.py get_row_data` method, which queries the database on the row data.
 ```.py
     def get_row_data(self):
         db = DatabaseManager('database.db') # connect with the database
@@ -116,6 +115,9 @@ Constructing the tables through this method not only allows for the current tabl
         return row_data
 ```
 
+To keep the style consistent and limit the number of possible error points, the screens that display the data for employees can each be a class that inherits from a template class that allows them to display different data by having different values for keyword arguments upon initialization.
+
+Inherited classes were used instead of class instances because kivyMD requires that each screen needs to be initialized by a python class of the same name. Therefore, an instance would possibly cause errors with kivyMD, and class that inherits from template were used instead.
 
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
@@ -132,49 +134,6 @@ class EmployeeRestaurantList(EmployeeTemplate):
         super().__init__(**kwargs)
 ```
 
-```.py
-def show_edit_dialog(self):
-    self.dialog_content = MDBoxLayout(orientation="vertical", spacing=10, size_hint_y=None, height=600)
-    self.text_fields = []
-    self.row_values = self.row_data[self.selected_row_index]  # Get selected row values
-    for i, column in enumerate(self.column_data[:-1]): # id is excluded
-        text = str(self.row_values[i]) # # make sure eveyrthing is a stirng
-        text_field = MDTextField(hint_text=f"{column[0]}", text=text)
-        self.text_fields.append(text_field)
-        self.dialog_content.add_widget(text_field)
-    self.dialog = MDDialog(
-        type="custom",
-        content_cls=self.dialog_content,
-        buttons=[
-            MDRaisedButton(text="Save", on_release=self.save_data),
-            MDRaisedButton(text="Cancel", on_release=lambda x: self.dialog.dismiss()),
-        ],
-    )
-    self.dialog.open()
-```
-
-```.py
-def add_row(self, not_needed_data):
-    db = DatabaseManager('database.db')
-    query = f'SELECT MAX({self.id_name}) from {self.name_}'
-    current_id = db.execute(query)[0][0]
-    values = list(text_field.text for text_field in self.text_fields_add)
-    values.append(current_id+1)
-    self.row_data.append(values)
-    self.create_data_table()
-
-    query = f'insert into {self.name_}('
-    for i in range(len(self.column_data)-1):
-        query += f'{self.column_data[i][0]},'
-    query = query[:-1] +') values ('
-    for i in range(len(values)-1):
-        query += f'"{values[i]}",'
-    query = query[:-1] + ');'
-    db.run_save(query)
-    db.close()
-    self.dialog_add.dismiss()
-    MDDialog(title="Item successfully added!").open()
-```
 
 
 ## Map
