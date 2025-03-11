@@ -80,3 +80,70 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 | 33 | Create demonstration video for my product | Verify that my product works in its entirety | 45 minutes | March 11 | D |
 | 34 | Add additional comments to clarify my code | Increase ease of possible future modifications | 20 minutes | March 11 | D |
 | 35 | Meet client for final evaluation | Client confirms that the program fulfills every success criteria | 20 minutes | March 11 | A/D |
+
+
+# Criterion C: Development
+```.py
+class EmployeeRestaurantList(EmployeeTemplate):
+    def __init__(self, **kwargs):
+        kwargs["name"] = "restaurant"
+        kwargs["screen_name"] = "EmployeeRestaurantList"
+        kwargs["column_data"] = [
+            ("name", dp(50)),
+            ("location", dp(50)),
+            ("restaurant_id", dp(40)),
+        ]
+        kwargs["row_query"] = '''select name, location, restaurant_id from restaurant'''
+        kwargs["id_name"] = "restaurant_id"
+        super().__init__(**kwargs)
+```
+
+```.py
+    def on_pre_enter(self, *args):
+        self.ids.container.clear_widgets()  # Avoid duplication when re-entering
+        self.current_marker = None
+        self.current_line = None
+        self.lat = None
+        self.lon = None
+        self.cards = []
+        for food in CustomerDashboard.order:
+            card = self.create_card(food)
+            self.ids.container.add_widget(card)
+            self.cards.append(card)
+
+        db = DatabaseManager("database.db")
+        query = "select * from restaurant"
+        self.restaurants = db.execute(query)
+        for restaurant in self.restaurants:
+            lat, lon = restaurant[2].split(";")
+            self.ids.map_view.add_widget(MapMarker(lat=lat, lon=lon))
+```
+```.kv
+MapView:
+    id: map_view
+    size_hint: 1, 1
+    pos_hint_x: 0.5
+    lat: 35.653798
+    lon: 139.816640
+    zoom: 8
+    double_tap_zoom: False
+    min_zoom: 10
+    on_touch_down: root.add_marker(*args)
+```
+```.py
+class LineLayer(MapLayer):
+    def __init__(self, point_a, point_b, **kwargs):
+        super().__init__(**kwargs)
+        self.point_a = point_a
+        self.point_b = point_b
+    def reposition(self):
+        self.canvas.clear()
+        mapview = self.parent
+        if not mapview:
+            return
+        with self.canvas:
+            Color(1, 0, 0, 1)  # Red color line
+            x1, y1 = mapview.get_window_xy_from(lat=self.point_a[0], lon=self.point_a[1], zoom=mapview.zoom)
+            x2, y2 = mapview.get_window_xy_from(lat=self.point_b[0], lon=self.point_b[1], zoom=mapview.zoom)
+            Line(points=[x1, y1, x2, y2], width=4)  # Increased line thickness
+```
