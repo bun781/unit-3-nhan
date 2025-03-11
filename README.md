@@ -14,7 +14,7 @@ The graphic framework Kivy and the extension KivyMD will be used to create the G
 The data storage solution will use SQLite. Relational database tools like SQL are preferred over simple storage options such as CSV or JSON files, as data stored is relatively complex and interrelated. SQLite was selected because it is lightweight and embedded, allowing users to quickly access data even when not having stable connections. It also does not require a lot of storage nor a dedicated server, resources that are excessive for the application and require additional operating cost for my client.
 
 ## Success Criteria
-1. The application has a login and register functions for both users and employees.
+1. The application has a login function both users and employees and a register function for users.
    
    **Quote from problem defintion:** "My client said that most importantly, the restaurant can’t keep track of who is making the calls", "there is no one or nothing recording the order"
    
