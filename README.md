@@ -50,15 +50,15 @@ The data storage solution will use SQLite. Relational database tools like SQL ar
 | 5 | 1. Run the program and input `"a"` as username and `"a"` as password. <br> 2. Click the button that says `Restaurant list`. <br> 3. Click on any row, modify the data in the row. <br> 4. Stop the program. <br> 5. Run the program and input `"a"` as username and `"a"` as password. <br> 6. Click the button that says `Restaurant list`. <br> 7. Add a new restaurant via the `Add new` button. <br> 8. Stop the program. <br> 9. Run the program, log in or register then log in into the application. <br> 10. Choose a food item and click the `View Cart` button. | - After step 6, the tester will see that the row they modified retained its modification even after a program restart. <br> - After step 10, the tester will see that the new location they added appears on the map. | 5 - The employee accounts can add or modify food listings to the software and restaurant locations to the map. |
 
 ## Flow Diagrams
-<img src="https://github.com/user-attachments/assets/c3a995d9-ebb6-4e24-9716-45f2199b7ee2" height="3508">
+<img src="https://github.com/user-attachments/assets/c3a995d9-ebb6-4e24-9716-45f2199b7ee2" height="1000">
 
 Flow diagram of the software's login method from the LoginScreen class that can differentiate between employees and customer
 
-<img src="https://github.com/user-attachments/assets/4692d369-d84d-4853-a196-434c2446a2a6" height="3508">
+<img src="https://github.com/user-attachments/assets/4692d369-d84d-4853-a196-434c2446a2a6" height="1000">
 
 Flow diagram of the software's method to add new items to any table of the database
 
-<img src="https://github.com/user-attachments/assets/a6d1c5db-ae16-4a78-bc61-9c7e36876585" height="3508">
+<img src="https://github.com/user-attachments/assets/a6d1c5db-ae16-4a78-bc61-9c7e36876585" height="1000">
 
 Flow diagram of the software's method that can send and store customer's order in the database
 
