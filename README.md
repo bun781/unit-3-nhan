@@ -182,7 +182,7 @@ MapView:
     on_touch_down: root.add_marker(*args) # *args passes the information about the touch event
 ```
 
-Kivy can generates a blank interactive map using the openstreetmap application programming interface (API) through the MapView class. The code above defines a map that is centered round ```lat``` latitude and `lon` longitude, and the `root.add_marker()` method will be called upon the map being touched.
+Kivy can generates a blank interactive map using the openstreetmap application programming interface (API) through the MapView class. The code above defines a map that is centered round `lat` latitude and `lon` longitude, and the `root.add_marker()` method will be called upon the map being touched.
 
 This method again highlights the benefits of using kivy. Instead of manually requesting an API key from openstreetmap and creating the code necessary to display the map, kivy can do that with a short piece of code without the developer ever needing to directly communicate with openstreetmap.
 
@@ -193,6 +193,7 @@ def on_pre_enter(self, *args):
     db = DatabaseManager("database.db") # connect with the database
     query = "select * from restaurant" # select every restaurant from restaurant
     self.restaurants = db.execute(query)
+    db.close()
 
     for restaurant in self.restaurants:
         lat, lon = restaurant[2].split(";") # retrieve the latitude and longitude of the restaurant
@@ -281,16 +282,20 @@ class LineLayer(MapLayer):
 ## Food card
 ```.py
 def on_pre_enter(self, *args):
-    db = DatabaseManager(name = "database.db")
+    db = DatabaseManager(name = "database.db") # connect with the database
     query = f'''select * from food_listing'''
-    foods = db.execute(query=query)
-    for food in foods:  # Generate 5 instances of the card
+    foods = db.execute(query=query) # retrieve food listings from the database
+    db.close() # close the connection with the database to save resources
+
+    for food in foods: # create a card for each food
         card = self.create_card(food)
         self.ids.container.add_widget(card)
-    db.close()
 ```
+
+The code above shows how the program creates cards for food listing by querying the database on the information about every food listing and make a card for each of the retrieved food listings using the `self.create_card()` method. The code below shows how such cards are created. The method `food` argument is a list that contains information about each food listing. Generating food cards based on the information stored in the database, as opposed to storing it in the code itself, allows for information of each food card to consistently update with the employee account's modification to the food data.
+
 ```.py
-    def create_card(self, food):
+    def create_card(self, food:list):
         card = MDCard( # creates a main MDCard to nest everything in
             size_hint=(None, None),
             size=("350dp", "110dp"),
@@ -310,7 +315,7 @@ def on_pre_enter(self, *args):
         )
 
         # Image container
-        image_card = MDCard(
+        image_card = MDCard( # image of the food
             size_hint=(None, None),
             size=("80dp", "80dp"),
             radius=[35],
@@ -326,16 +331,15 @@ def on_pre_enter(self, *args):
 
         image_card.add_widget(image)
 
-        # Right section (Text)
         right_section = MDBoxLayout(
             orientation="vertical",
-            spacing="4dp",  # Slightly more space
+            spacing="4dp",  
             size_hint_y=None,
             adaptive_height=True,
             pos_hint={"center_y": 0.5}
         )
 
-        title_label = MDLabel(
+        title_label = MDLabel( # name of the food
             text=f"{food[6]}",
             bold=True,
             font_style="H5",
@@ -346,15 +350,14 @@ def on_pre_enter(self, *args):
             valign="middle",
         )
 
-        # Description and price in one line
         description_container = MDBoxLayout(
             orientation="horizontal",
-            spacing="6dp",  # Just a tiny bit more space
+            spacing="6dp", 
             size_hint_y=None,
             adaptive_height=True
         )
 
-        description_label = MDLabel(
+        description_label = MDLabel( # description of the food
             text=f"{food[2]}",
             theme_text_color="Hint",
             size_hint_y=None,
@@ -362,12 +365,12 @@ def on_pre_enter(self, *args):
             valign="middle",
         )
 
-        price_label = MDLabel(
+        price_label = MDLabel( # price of the food
             text=f'¥{float(re.sub(r"[^0-9.]", "", str(food[1])))}',
             theme_text_color="Secondary",
             font_size="12sp",
             size_hint=(None, None),
-            size=("60dp", "20dp"),  # Just  tiny bit wider
+            size=("60dp", "20dp"),  
             valign="middle",
             halign="right",
         )
@@ -387,6 +390,12 @@ def on_pre_enter(self, *args):
 
         return card
 ```
+
+A limitation of SQLite is that even if the type of data stored in a cell is declared, users can still insert values that are not of that data type. This is extremely detrimental when strings are inserted into values that are expected to be float, such as the price of a food listing. For the price of the food listing, the statement `float(re.sub(r"[^0-9.]", "", str(food[1])))` was used to make sure that the information is a float. If the user mistakenly enter '12e3.5t' as the price, then the statement would correct it to '123.5'. the `re.sub()` method replaces any character that is not in `0123456789.` with an empty string, removing any non-numerical character in `str(food[1])`, allowing it to be safely converted back to a float again. Converting `food[1]`, where the price is stored, to a string is necessary because the `re.sub()` takes string as an argument.
+
+The reason why the check is implemented in the code while executing instead of when the data is entered is because if the software were to expand in the future, there are no guarantees that the developer would add a filter in data input, nor the effectiveness of that filter. Therefore, to prevent the code logic from breaking from receving the wrong data type, a filter must exist when the code is executing.
+
+The code below shows another instance of how the check is added to convert from strings to floats that are suitable as an argument to the `place_order()` method.
 ```.py
     def place_order(self, food_id):
         db = DatabaseManager(name = "database.db")
@@ -395,10 +404,10 @@ def on_pre_enter(self, *args):
         WHERE food_id = {food_id}
         '''
         food = db.execute(query=query)
+        db.close()
+
         CustomerDashboard.order.append(food)
-        print(CustomerDashboard.order)
         self.ids.cart.text = f'View cart: {len(CustomerDashboard.order)} items, ¥{sum(float(re.sub(r"[^0-9.]", "", str(food[0][1]))) for food in CustomerDashboard.order):.2f}'
-        print(CustomerDashboard.order)
 ```
 
 
