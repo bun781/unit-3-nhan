@@ -1,0 +1,63 @@
+MDBoxLayout:
+    orientation: "horizontal"
+    spacing: "10dp"
+    size_hint_y: None
+    height: self.minimum_height
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}  # Center the whole layout vertically and horizontally
+
+
+    MDCard:
+        size_hint: None, None
+        size: "350dp", "110dp"  # Set size of the card container
+        radius: [30]  # Increased radius for more rounded corners
+        elevation: 2  # Light shadow (increase for darker shadow)
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: "10dp"
+            padding: "10dp", "5dp"  # Reduce top and bottom padding (increase left and right padding if needed)
+            size_hint_y: None
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}  # Center everything inside the card
+
+            # Image Section
+            MDCard:
+                size_hint: None, None
+                size: "80dp", "80dp"  # Ensure a square shape for the image
+                radius: [35]  # Increased radius for rounded corners of the image card
+                elevation: 0  # No shadow for the image card
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}  # Center the image card vertically and horizontally
+                FitImage:
+                    source: "hu tieu.jpg"
+                    radius: [10]  # Rounded corners for the image
+                    size_hint: 1, 1  # Ensure the image fills the parent
+                    allow_stretch: True
+                    keep_ratio: True
+
+            # Right Section (Stack)
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: "10dp"
+                size_hint_y: None
+                height: self.minimum_height
+                pos_hint: {"center_y": 0.5}  # Vertically center the content
+
+                # Name Label
+                MDLabel:
+                    text: "Homemade Hu Tieu Ding Dong"
+                    bold: True
+                    font_style: "H5"
+                    halign: "left"
+                    size_hint_y: None
+                    height: self.texture_size[1]  # Auto-adjust height based on text
+                    text_size: self.width, None  # Make the text fit within the available width of the container
+                    font_size: "18sp"  # Use scalable font size
+                    valign: "middle"  # Align vertically in the middle
+
+                # Description Label
+                MDLabel:
+                    text: "Better than 100% of Kyrgyz food."
+                    theme_text_color: "Hint"
+                    size_hint_y: None  # Allow it to take natural space
+                    height: self.texture_size[1]  # Auto-adjust height based on content
+                    valign: "middle"  # Align vertically in the middle

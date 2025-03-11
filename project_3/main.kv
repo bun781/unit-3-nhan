@@ -1,0 +1,341 @@
+ScreenManager:
+    LoginScreen:
+        name: "LoginScreen"
+    RegistrationScreen:
+        name: "RegistrationScreen"
+    CustomerDashboard:
+        name: "CustomerDashboard"
+    EmployeeDashboard:
+        name: "EmployeeDashboard"
+    CustomerOrder:
+        name: "CustomerOrder"
+    EmployeeOrderArchive:
+        name: "EmployeeOrderArchive"
+    EmployeeFoodListings:
+        name: "EmployeeFoodListings"
+    EmployeeRestaurantList:
+        name: "EmployeeRestaurantList"
+
+
+<LoginScreen>:
+    name: "LoginScreen"
+    FitImage:
+        source: "chaca.jpg"
+        size: self.parent.size
+        allow_stretch: True
+        keep_ratio: False
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: 0.65, 1
+        pos_hint: {'center_x': .5, 'center_y': .9}
+
+        MDBoxLayout
+            padding: "15dp"
+            spacing: "5dp"
+            md_bg_color: "white"
+            size_hint_y: None
+            adaptive_height: True
+            radius:[30]
+            pos_hint: {"center_x":0.5}
+            orientation: "vertical"
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                mode: "rectangle"
+
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                mode: "rectangle"
+                password: True
+            MDRectangleFlatButton:
+                spacing: "5dp"
+                text: "Log in"
+                text_size: "20px"
+                size_hint_x: 1
+                on_release:
+                    root.try_login()
+            MDTextButton:
+                text: "Don't have an account? [u][color=#1565C0]Sign up[/color][/u]"
+                markup: True
+                on_release: root.manager.current = "RegistrationScreen"
+                halign: "center"
+                theme_font_size: "1px"
+                theme_text_color: "Hint"
+                pos_hint: {"center_x": 0.5}
+
+
+<RegistrationScreen>
+    name: "RegistrationScreen"
+    FitImage:
+        source: "chaca.jpg"
+        size: self.parent.size
+        allow_stretch: True
+        keep_ratio: False
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: 0.65, 1
+        pos_hint: {'center_x': .5, 'center_y': .8}
+        MDBoxLayout
+            padding: "15dp"  # <-- This adds space inside the white box
+            spacing: "5dp"
+            md_bg_color: "white"
+            size_hint_y: None
+            adaptive_height: True
+            radius:[30]
+            pos_hint: {"center_x":0.5}
+            orientation: "vertical"
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                mode: "rectangle"
+            MDTextField:
+                id: name
+                hint_text: "Full Name"
+                mode: "rectangle"
+            MDTextField:
+                id: email
+                hint_text: "Email"
+                mode: "rectangle"
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                mode: "rectangle"
+                helper_text: "Passwords do not match"
+                helper_text_mode: "on_error"
+                password: True
+            MDTextField:
+                id: repassword
+                hint_text: "Re-enter password"
+                mode: "rectangle"
+                password: True
+            MDRectangleFlatButton:
+                spacing: "5dp"
+                theme_text_size: "5px"
+                text: "Register"
+                size_hint_x: 1
+                on_release:
+                    root.try_register()
+            MDTextButton:
+                text: "[u][color=#1565C0]Back[/color][/u]"
+                markup: True
+                on_release: root.manager.current = "LoginScreen"
+                halign: "center"
+                theme_font_size: "1px"
+                theme_text_color: "Hint"
+                pos_hint: {"center_x": 0.5}
+
+<CustomerDashboard>
+    name: "CustomerDashboard"
+
+    FitImage:
+        source: "back.webp"
+        size: self.parent.size
+        allow_stretch: True
+        keep_ratio: False
+
+    MDBoxLayout:
+        orientation: "vertical"  # Ensures proper stacking
+        spacing: "10dp"
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            md_bg_color: 1, 1, 1, 1  # White background
+            padding: "10dp"
+
+            MDLabel:
+                id: CustomerDashboard_title
+                halign: "center"
+                theme_text_color: "Primary"
+                font_style: "H5"
+                bold: True
+
+        MDScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            scroll_type: ["bars", "content"]
+            bar_width: "5dp"
+            effect_cls: "ScrollEffect"
+
+            MDBoxLayout:
+                id: container
+                orientation: "vertical"
+                padding: "10dp"
+                spacing: "10dp"
+                size_hint_y: None
+                height: self.minimum_height
+        MDBoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            md_bg_color: 1, 1, 1, 1  # White background
+            padding: "10dp"
+            pos_hint_y: 0
+            MDFloatLayout:
+                MDLabel:
+                    id: cart
+                    text: "View cart"
+                    halign: "center"
+                    theme_text_color: "Primary"
+                    font_style: "H5"
+                    bold: True
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                MDIconButton:
+                    size_hint: None, None
+                    size: cart.texture_size[0] + dp(20), cart.texture_size[1] + dp(10)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    icon: ""  # No icon, keeps it invisible
+                    text_color: 0, 0, 0, 0  # Transparent text color
+                    md_bg_color: 0, 0, 0, 0  # Fully transparent
+                    on_press: root.manager.current = "CustomerOrder"
+
+<EmployeeDashboard>
+    name: "EmployeeDashboard"
+    FitImage:
+        source: "oromo.jpg"
+        size: self.parent.size
+        allow_stretch: True
+        keep_ratio: False
+    MDBoxLayout:
+        md_bg_color: 1, 1, 1, 1
+        orientation: "vertical"
+        pos_hint: {"center_x":0.5, "center_y":0.7}
+        spacing: 20
+        radius:[30]
+        size_hint: 0.6, 0.2
+        MDFillRoundFlatIconButton:
+            font_size: "35px"
+            size_hint_x: 0.9
+            pos_hint: {"center_x":0.5, "center_y":0.5}
+            text: "Order archive"
+            on_release: root.manager.current = 'EmployeeOrderArchive'
+        MDFillRoundFlatIconButton:
+            font_size: "35px"
+            size_hint_x: 0.9
+            pos_hint: {"center_x":0.5, "center_y":0.5}
+            text: "Food listings"
+            on_release: root.manager.current = 'EmployeeFoodListings'
+        MDFillRoundFlatIconButton:
+            font_size: "35px"
+            size_hint_x: 0.9
+            pos_hint: {"center_x":0.5, "center_y":0.5}
+            text: "Restaurants lists"
+            on_release: root.manager.current = 'EmployeeRestaurantList'
+<EmployeeOrderArchive>
+    name: "EmployeeOrderArchive"
+
+<EmployeeRestaurantList>
+    name: "EmployeeRestaurantList"
+
+<EmployeeFoodListings>
+    name: "EmployeeFoodListings"
+
+<CustomerOrder>
+    name: "CustomerOrder"
+
+    FitImage:
+        source: "back.webp"
+        size: self.parent.size
+        allow_stretch: True
+        keep_ratio: False
+
+    MDBoxLayout:
+        orientation: "vertical"  # Ensures proper stacking
+        spacing: "10dp"
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            md_bg_color: 1, 1, 1, 1  # White background
+            padding: "10dp"
+            MDLabel:
+                id: CustomerOrder_title
+                text: "Order detail"
+                halign: "center"
+                theme_text_color: "Primary"
+                font_style: "H5"
+                bold: True
+        MDCard:
+            size_hint: None, None
+            orientation: 'vertical'
+            size: root.width-100,root.width-100
+            elevation: 0
+            radius: [50]
+            padding: 30
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MapView:
+                id: map_view
+                size_hint: 1, 1
+                pos_hint_x: 0.5
+                lat: 35.653798
+                lon: 139.816640
+                zoom: 8
+                double_tap_zoom: False
+                min_zoom: 10
+                on_touch_down: root.add_marker(*args)
+
+            MDLabel:
+                size_hint: 1, 0.1
+                id: map_view_closest_store
+                text: "Choose your location"
+                halign: 'center'
+        MDScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            scroll_type: ["bars", "content"]
+            bar_width: "5dp"
+            effect_cls: "ScrollEffect"
+
+            MDBoxLayout:
+                id: container
+                orientation: "vertical"
+                padding: "10dp"
+                spacing: "10dp"
+                size_hint_y: None
+                height: self.minimum_height
+        MDBoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            md_bg_color: 1, 1, 1, 1  # White background
+            padding: "10dp"
+            pos_hint_y: 0
+            MDBoxLayout:
+                MDFloatLayout:
+                    MDLabel:
+                        id: cart
+                        text: "Back"
+                        halign: "center"
+                        theme_text_color: "Primary"
+                        font_style: "H5"
+                        bold: True
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDIconButton:
+                        size_hint: None, None
+                        size: cart.texture_size[0] + dp(20), cart.texture_size[1] + dp(10)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        icon: ""
+                        text_color: 0, 0, 0, 0
+                        md_bg_color: 0, 0, 0, 0
+                        on_press: root.manager.current = "CustomerDashboard"
+
+                MDFloatLayout:
+                    MDLabel:
+                        id: proceed
+                        text: "Confirm Order"
+                        halign: "center"
+                        theme_text_color: "Primary"
+                        font_style: "H5"
+                        bold: True
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDIconButton:
+                        size_hint: None, None
+                        size: proceed.texture_size[0] + dp(20), proceed.texture_size[1] + dp(10)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        icon: ""  # No icon, keeps it invisible
+                        text_color: 0, 0, 0, 0  # Transparent text color
+                        md_bg_color: 0, 0, 0, 0  # Fully transparent
+                        on_press: root.place_order()
