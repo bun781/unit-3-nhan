@@ -63,7 +63,7 @@ Flow diagram of the software's method to add new items to any table of the datab
 Flow diagram of the software's method that can send and store customer's order in the database
 
 ## System Diagram
-![image](https://github.com/user-attachments/assets/4d99e418-e7dd-45dd-bf90-9334d3abbdc2)
+![image](https://github.com/user-attachments/assets/1f43e789-cd90-4568-a37b-01b587f53489)
 
 ## ER Diagram
 <img width="1164" alt="image" src="https://github.com/user-attachments/assets/5cc258b3-c666-4241-9d73-30e15d06a232" />
