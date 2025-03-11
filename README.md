@@ -1,3 +1,5 @@
+[^1]: OpenAI. (2023). ChatGPT (Mar 14 version) [Large language model]. https://chat.openai.com/chat
+[^2]: KivyMD. (n.d.). Screen Manager — Kivy 2.0.0 documentation. Kivy.org. https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html
 # Criterion A: Planning
 ## Problem Definition
 My client is an old local restaurateur with a chain of restaurants around the city. Lately, he noticed that the number of customers visiting his restaurants are decreasing since online food ordering and delivering services are on the rise. My client wants to be able to update his service so that the restaurant can compete with these platforms. The restaurant currently only has food delivery via orders done through the phone, but my client said that they refrain from doing so because it provides no written record of the orders. He also said that it generally hurts the relationship between the restaurants and customers because there is nothing recording the order. Furthermore, he said that these disagreements usually start because customers do not know what the dishes look like, nor which ingredients were in it. And as users usually underestimate the cost of delivery to their location, they usually disagree at the food delivery fees. The problem also expands to staff’s reliability in pricing through phones, as they might read the wrong price. He said that whether or not it is accidentally or deliberately, a situation like such should never happen. My client said that most importantly, the restaurant can’t keep track of who is making the calls. He said that the restaurant chain prides on having the best customer service program. Lastly, he requested that the solution should accommodate for his ever expanding restaurant network and food listings.
@@ -171,56 +173,64 @@ def on_pre_enter(self, *args):
 
 The code above shows that upon entering the screen that has the map, the program will retrieve the position of each restaurant from the database and create a corresponding MapMarker object on the map.
 
-To save space on the database by having less columns and data points, the coordinate of the restaurants are stored togther in the form of "latitude;longitude". Once retrieve from the database, this information will be split into the `lat` and `lon` variable through the built-in `split()` method for python strings to be used to generat the map marker for the restaurant.
-
+To save space on the database by having less columns and data points, the coordinate of the restaurants are stored togther in one column in the form of "latitude;longitude". Once retrieve from the database, this information will be split into the `lat` and `lon` variable through the built-in `split()` method for python strings to be used to generat the map marker for the restaurant.
 
 ```.py
     def add_marker(self, instance, touch):
-        print(instance)
-        print(touch)
-        if instance.collide_point(*touch.pos):
+        if instance.collide_point(*touch.pos): # if the touch is within the map
+
+        # creating the map marker
             map_view = self.ids.map_view
 
-            # Convert touch pos to map-relative pos
-            rel_x = touch.x - map_view.pos[0]
+            # touch is the position where the screen was touched, map_view.pos is where the map is placed within the screen
+            rel_x = touch.x - map_view.pos[0] 
             rel_y = touch.y - map_view.pos[1]
 
+            # convert the screen coordinate to map coordinate
             lat, lon = map_view.get_latlon_at(rel_x, rel_y)
             self.lat = lat
             self.lon = lon
 
-            print(f"Touch at {touch.pos}, converted to map lat/lon: {lat}, {lon}")
-
-            if self.current_marker: # remove marker if it already exists
-                map_view.remove_widget(self.current_marker)
-            self.current_marker = MapMarker(lat=lat, lon=lon)
-            map_view.add_widget(self.current_marker)
-
-            if self.current_marker:
+            # remove marker and line if it already exists, as one order cannot be delivered to two separate locations
+            if self.current_marker: 
                 map_view.remove_widget(self.current_marker)
             if self.current_line:
                 map_view.remove_widget(self.current_line)
 
+            # create the map marker object and add it to the map
             self.current_marker = MapMarker(lat=lat, lon=lon)
             map_view.add_widget(self.current_marker)
 
+        # finding the closest restaurant
             self.closest_point = []
+            for i in range(len(self.restaurants)): # for every restaurant
 
-            for i in range(len(self.restaurants)):
-                print(self.closest_point)
-                lat_r, lon_r = self.restaurants[i][2].split(";")
+                # retrieve the latitude and longitude of the restaurants and convert them from strings to floats
+                lat_r, lon_r = self.restaurants[i][2].split(";") 
                 lon_r = float(lon_r)
                 lat_r = float(lat_r)
-                n = self.haversine(lon, lat, lon_r, lat_r)
-                if not self.closest_point:
+
+                # find the closest restaurant to the user's location
+                n = self.haversine(lon, lat, lon_r, lat_r) # use the haversine formula because the earth is not flat.
+
+                if not self.closest_point: # set the current restaurant as the closest one if there is nothing in the closest_point list yet
                     self.closest_point = [n, self.restaurants[i][1], (lat_r, lon_r)]
-                elif n < self.closest_point[0]:
+                elif n < self.closest_point[0]: # first index of self.closest_point is the distance
                     self.closest_point = [n, self.restaurants[i][1], (lat_r, lon_r)]
+
+            # after the loop, the restaurant that is closest to the marker remains in the self.closest_point list. Draw line to that point
             self.draw_path(lat, lon,self.closest_point[2])
 
             self.ids.map_view_closest_store.text = f'{self.closest_point[0]:.2f}Km away, closest to {self.closest_point[1]}'
 ```
 
+The code above describes the `add_marker()` method, which is called when a user's touch is recorded on the map. It adjust coordinate of the user's touch event based on the position of the map on the screen in order to accurate change it into the correct map coordinate.
+
+As one order cannot go to multiple location, the code uses simple if statement to check whether or not a marker already exists and removes it; a basic statement that minimizes any unexpected behaviour.
+
+For a similar reason, a basic for loop that loops through the list of restaurants allows the code to find the closest restaurant to the marker in linear time. Attempting to minimize unexpected bahaviour like these two example is important because kivyMD is a framework that has a high level of abstraction, making it difficult and impractical for developers to account for every possible behaviour of the framework. Therefore, keeping the code's logic simple is important.
+
+Additionally, code separation is important for the ease of further expansion of the program. The line drawn between the customer's location and the closest restaurant is in its separate class, it is a MapLayer class that specifically create a line on the map. By separating it into its own class, if the method that creates this class successfully executes but the line does not show up, the develop will know that it is a problem with their kivyMD code, not the program's logic, aiding in debugging.
 
 ```.py
 class LineLayer(MapLayer):
@@ -228,13 +238,13 @@ class LineLayer(MapLayer):
         super().__init__(**kwargs)
         self.point_a = point_a
         self.point_b = point_b
-    def reposition(self):
+    def draw_line(self):
         self.canvas.clear()
         mapview = self.parent
         if not mapview:
             return
         with self.canvas:
-            Color(1, 0, 0, 1)  # Red color line
+            Color(1, 0, 0, 1)
             x1, y1 = mapview.get_window_xy_from(lat=self.point_a[0], lon=self.point_a[1], zoom=mapview.zoom)
             x2, y2 = mapview.get_window_xy_from(lat=self.point_b[0], lon=self.point_b[1], zoom=mapview.zoom)
             Line(points=[x1, y1, x2, y2], width=4)  # Increased line thickness
@@ -243,11 +253,6 @@ class LineLayer(MapLayer):
 ## Food card
 ```.py
 def on_pre_enter(self, *args):
-    print(LoginScreen.current_user)
-    if LoginScreen.current_user:
-        self.ids.CustomerDashboard_title.text = f"Welcome {LoginScreen.current_user.title()}!"
-        print(LoginScreen.current_user)
-    self.ids.container.clear_widgets()  # Avoid duplication when re-entering
     db = DatabaseManager(name = "database.db")
     query = f'''select * from food_listing'''
     foods = db.execute(query=query)
@@ -257,21 +262,8 @@ def on_pre_enter(self, *args):
     db.close()
 ```
 ```.py
-    def place_order(self, food_id):
-        db = DatabaseManager(name = "database.db")
-        query = f'''
-        SELECT * FROM food_listing
-        WHERE food_id = {food_id}
-        '''
-        food = db.execute(query=query)
-        CustomerDashboard.order.append(food)
-        print(CustomerDashboard.order)
-        self.ids.cart.text = f'View cart: {len(CustomerDashboard.order)} items, ¥{sum(float(re.sub(r"[^0-9.]", "", str(food[0][1]))) for food in CustomerDashboard.order):.2f}'
-        print(CustomerDashboard.order)
-```
-```.py
     def create_card(self, food):
-        card = MDCard(
+        card = MDCard( # creates a main MDCard to nest everything in
             size_hint=(None, None),
             size=("350dp", "110dp"),
             radius=[30],
@@ -367,4 +359,19 @@ def on_pre_enter(self, *args):
 
         return card
 ```
+```.py
+    def place_order(self, food_id):
+        db = DatabaseManager(name = "database.db")
+        query = f'''
+        SELECT * FROM food_listing
+        WHERE food_id = {food_id}
+        '''
+        food = db.execute(query=query)
+        CustomerDashboard.order.append(food)
+        print(CustomerDashboard.order)
+        self.ids.cart.text = f'View cart: {len(CustomerDashboard.order)} items, ¥{sum(float(re.sub(r"[^0-9.]", "", str(food[0][1]))) for food in CustomerDashboard.order):.2f}'
+        print(CustomerDashboard.order)
+```
+
+
 
