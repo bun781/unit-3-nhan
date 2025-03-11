@@ -83,6 +83,7 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 
 
 # Criterion C: Development
+## Inheritance
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
     def __init__(self, **kwargs):
@@ -98,32 +99,46 @@ class EmployeeRestaurantList(EmployeeTemplate):
         super().__init__(**kwargs)
 ```
 ```.py
-# Burger Menu Button (Opens Dropdown)
-MDIconButton:
-    icon: "menu" 
-    size_hint_x: None
-    width: "50dp"
-    on_release: app.root.get_screen("{self.screen_name}").open_menu(self)
+def show_edit_dialog(self):
+    self.dialog_content = MDBoxLayout(orientation="vertical", spacing=10, size_hint_y=None, height=600)
+    self.text_fields = []
+    self.row_values = self.row_data[self.selected_row_index]  # Get selected row values
+    for i, column in enumerate(self.column_data[:-1]): # id is excluded
+        text = str(self.row_values[i]) # # make sure eveyrthing is a stirng
+        text_field = MDTextField(hint_text=f"{column[0]}", text=text)
+        self.text_fields.append(text_field)
+        self.dialog_content.add_widget(text_field)
+    self.dialog = MDDialog(
+        type="custom",
+        content_cls=self.dialog_content,
+        buttons=[
+            MDRaisedButton(text="Save", on_release=self.save_data),
+            MDRaisedButton(text="Cancel", on_release=lambda x: self.dialog.dismiss()),
+        ],
+    )
+    self.dialog.open()
 ```
 ```.py
-    def show_edit_dialog(self):
-        self.dialog_content = MDBoxLayout(orientation="vertical", spacing=10, size_hint_y=None, height=600)
-        self.text_fields = []
-        self.row_values = self.row_data[self.selected_row_index]  # Get selected row values
-        for i, column in enumerate(self.column_data[:-1]): # id is excluded
-            text = str(self.row_values[i]) # # make sure eveyrthing is a stirng
-            text_field = MDTextField(hint_text=f"{column[0]}", text=text)
-            self.text_fields.append(text_field)
-            self.dialog_content.add_widget(text_field)
-        self.dialog = MDDialog(
-            type="custom",
-            content_cls=self.dialog_content,
-            buttons=[
-                MDRaisedButton(text="Save", on_release=self.save_data),
-                MDRaisedButton(text="Cancel", on_release=lambda x: self.dialog.dismiss()),
-            ],
-        )
-        self.dialog.open()
+def add_row(self, not_needed_data):
+    db = DatabaseManager('database.db')
+    query = f'SELECT MAX({self.id_name}) from {self.name_}'
+    current_id = db.execute(query)[0][0]
+    values = list(text_field.text for text_field in self.text_fields_add)
+    values.append(current_id+1)
+    self.row_data.append(values)
+    self.create_data_table()
+
+    query = f'insert into {self.name_}('
+    for i in range(len(self.column_data)-1):
+        query += f'{self.column_data[i][0]},'
+    query = query[:-1] +') values ('
+    for i in range(len(values)-1):
+        query += f'"{values[i]}",'
+    query = query[:-1] + ');'
+    db.run_save(query)
+    db.close()
+    self.dialog_add.dismiss()
+    MDDialog(title="Item successfully added!").open()
 ```
 ```.py
 self.data_table = MDDataTable(
@@ -135,6 +150,8 @@ self.data_table = MDDataTable(
     rows_num=10
 )
 ```
+
+## Map
 ```.py
     def on_pre_enter(self, *args):
         self.ids.container.clear_widgets()  # Avoid duplication when re-entering
@@ -183,5 +200,22 @@ class LineLayer(MapLayer):
             x1, y1 = mapview.get_window_xy_from(lat=self.point_a[0], lon=self.point_a[1], zoom=mapview.zoom)
             x2, y2 = mapview.get_window_xy_from(lat=self.point_b[0], lon=self.point_b[1], zoom=mapview.zoom)
             Line(points=[x1, y1, x2, y2], width=4)  # Increased line thickness
+```
+
+## Food card
+```.py
+def on_pre_enter(self, *args):
+    print(LoginScreen.current_user)
+    if LoginScreen.current_user:
+        self.ids.CustomerDashboard_title.text = f"Welcome {LoginScreen.current_user.title()}!"
+        print(LoginScreen.current_user)
+    self.ids.container.clear_widgets()  # Avoid duplication when re-entering
+    db = DatabaseManager(name = "database.db")
+    query = f'''select * from food_listing'''
+    foods = db.execute(query=query)
+    for food in foods:  # Generate 5 instances of the card
+        card = self.create_card(food)
+        self.ids.container.add_widget(card)
+    db.close()
 ```
 
