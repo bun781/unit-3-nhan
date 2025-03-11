@@ -62,7 +62,8 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 ![image](https://github.com/user-attachments/assets/4d99e418-e7dd-45dd-bf90-9334d3abbdc2)
 
 ## ER Diagram
-<img width="1161" alt="image" src="https://github.com/user-attachments/assets/208ce973-f53b-48d8-8082-95e9a0435329" />
+<img width="1164" alt="image" src="https://github.com/user-attachments/assets/5cc258b3-c666-4241-9d73-30e15d06a232" />
+
 
 ## UML Diagram
 ![image](https://github.com/user-attachments/assets/c92d6601-33cc-43bc-be9d-b80ee4ecbb55)
