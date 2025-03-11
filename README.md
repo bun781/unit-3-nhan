@@ -12,11 +12,11 @@ The graphic framework Kivy and the extension KivyMD will be used to create the G
 The data storage solution will use SQLite. Relational database tools like SQL are preferred over simple storage options such as CSV or JSON files, as data stored is relatively complex and interrelated. SQLite was selected because it is lightweight and embedded, allowing users to quickly access data even when not having stable connections. It also does not require a lot of storage nor a dedicated server, resources that are excessive for the application and require additional operating cost for my client.
 
 ## Success Criteria
-- The application has a login and register functions for both users and employees.
-- The application allows users to order food and securely save the order to a database.
-- The application allows users to select their location through a map.
-- The application allows employees to view orders made by customers.
-- The employee accounts can add or modify food listings to the software and restaurant locations to the map.
+1. The application has a login and register functions for both users and employees.
+2. The application allows users to order food and securely save the order to a database.
+3. The application allows users to select their location through a map.
+4. The application allows employees to view orders made by customers.
+5. The employee accounts can add or modify food listings to the software and restaurant locations to the map.
 
 # Criterion B: Design
 
@@ -122,53 +122,105 @@ Inherited classes were used instead of class instances because kivyMD requires t
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
     def __init__(self, **kwargs):
-        kwargs["name"] = "restaurant"
+        kwargs["name"] = "restaurant" 
         kwargs["screen_name"] = "EmployeeRestaurantList"
-        kwargs["column_data"] = [
-            ("name", dp(50)),
+        kwargs["column_data"] = [ # column names
+            ("name", dp(50)), # tuple is in the format of (column name, column display width)
             ("location", dp(50)),
             ("restaurant_id", dp(40)),
         ]
-        kwargs["row_query"] = '''select name, location, restaurant_id from restaurant'''
-        kwargs["id_name"] = "restaurant_id"
+        kwargs["row_query"] = '''select name, location, restaurant_id from restaurant''' # this query retrieves the data needed for the table
+
+        kwargs["id_name"] = "restaurant_id" # define the column that contains the priary key to the database table
         super().__init__(**kwargs)
 ```
 
-
-
-## Map
-```.py
-    def on_pre_enter(self, *args):
-        self.ids.container.clear_widgets()  # Avoid duplication when re-entering
-        self.current_marker = None
-        self.current_line = None
-        self.lat = None
-        self.lon = None
-        self.cards = []
-        for food in CustomerDashboard.order:
-            card = self.create_card(food)
-            self.ids.container.add_widget(card)
-            self.cards.append(card)
-
-        db = DatabaseManager("database.db")
-        query = "select * from restaurant"
-        self.restaurants = db.execute(query)
-        for restaurant in self.restaurants:
-            lat, lon = restaurant[2].split(";")
-            self.ids.map_view.add_widget(MapMarker(lat=lat, lon=lon))
-```
+## Success criteria 3: Creating an interactive map that shows restaurants and allows user to select their location
 ```.kv
 MapView:
     id: map_view
     size_hint: 1, 1
     pos_hint_x: 0.5
+
+    #this is the center of the current restaurants, but future developers can 
     lat: 35.653798
     lon: 139.816640
+
     zoom: 8
     double_tap_zoom: False
     min_zoom: 10
-    on_touch_down: root.add_marker(*args)
+    on_touch_down: root.add_marker(*args) # *args passes the information about the touch event
 ```
+
+Kivy can generates a blank interactive map using the openstreetmap application programming interface (API) through the MapView class. The code above defines a map that is centered round `.kv lat` latitude and `.kv lon` longitude, and the `.kv root.add_marker()` method will be called upon the map being touched.
+
+This method again highlights the benefits of using kivy. Instead of manually requesting an API key from openstreetmap and creating the code necessary to display the map, kivy can do that with a short piece of code without the developer ever needing to directly communicate with openstreetmap.
+
+```.py
+def on_pre_enter(self, *args):
+    self.ids.container.clear_widgets()  # clear map if the user already placed their order once and needs to come back to the screen
+
+    db = DatabaseManager("database.db") # connect with the database
+    query = "select * from restaurant" # select every restaurant from restaurant
+    self.restaurants = db.execute(query)
+
+    for restaurant in self.restaurants:
+        lat, lon = restaurant[2].split(";") # retrieve the latitude and longitude of the restaurant
+        self.ids.map_view.add_widget(MapMarker(lat=lat, lon=lon)) # add a marker to the map at the coordinates retrieved
+```
+
+The code above shows that upon entering the screen that has the map, the program will retrieve the position of each restaurant from the database and create a corresponding MapMarker object on the map.
+
+To save space on the database by having less columns and data points, the coordinate of the restaurants are stored togther in the form of "latitude;longitude". Once retrieve from the database, this information will be split into the `.py lat` and `.py lon` variable through the built-in `.py .split()` method for python strings.
+
+```.py
+    def add_marker(self, instance, touch):
+        print(instance)
+        print(touch)
+        if instance.collide_point(*touch.pos):
+            map_view = self.ids.map_view
+
+            # Convert touch pos to map-relative pos
+            rel_x = touch.x - map_view.pos[0]
+            rel_y = touch.y - map_view.pos[1]
+
+            lat, lon = map_view.get_latlon_at(rel_x, rel_y)
+            self.lat = lat
+            self.lon = lon
+
+            print(f"Touch at {touch.pos}, converted to map lat/lon: {lat}, {lon}")
+
+            if self.current_marker: # remove marker if it already exists
+                map_view.remove_widget(self.current_marker)
+            self.current_marker = MapMarker(lat=lat, lon=lon)
+            map_view.add_widget(self.current_marker)
+
+            if self.current_marker:
+                map_view.remove_widget(self.current_marker)
+            if self.current_line:
+                map_view.remove_widget(self.current_line)
+
+            self.current_marker = MapMarker(lat=lat, lon=lon)
+            map_view.add_widget(self.current_marker)
+
+            self.closest_point = []
+
+            for i in range(len(self.restaurants)):
+                print(self.closest_point)
+                lat_r, lon_r = self.restaurants[i][2].split(";")
+                lon_r = float(lon_r)
+                lat_r = float(lat_r)
+                n = self.haversine(lon, lat, lon_r, lat_r)
+                if not self.closest_point:
+                    self.closest_point = [n, self.restaurants[i][1], (lat_r, lon_r)]
+                elif n < self.closest_point[0]:
+                    self.closest_point = [n, self.restaurants[i][1], (lat_r, lon_r)]
+            self.draw_path(lat, lon,self.closest_point[2])
+
+            self.ids.map_view_closest_store.text = f'{self.closest_point[0]:.2f}Km away, closest to {self.closest_point[1]}'
+```
+
+
 ```.py
 class LineLayer(MapLayer):
     def __init__(self, point_a, point_b, **kwargs):
