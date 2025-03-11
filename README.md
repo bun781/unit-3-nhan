@@ -102,7 +102,7 @@ self.data_table = MDDataTable(
 )
 ```
 
-This is great way to display the database information because the code for the graphic widget is independent of the table data, meaning that each data table that the employee need access to (orders, food listing, and restaurants), can easily be deployed through changing the column name list, `.py self.column_data`, and the row data list, `.py self.row_data`. 
+This is great way to display the database information because the code for the graphic widget is independent of the table data, meaning that each data table that the employee need access to (orders, food listing, and restaurants), can easily be deployed through changing the column name list, `self.column_data`, and the row data list, `self.row_data`. 
 
 Constructing the tables through this method not only allows for the current tables to have a consistent style, it also allows developers to easily add additional tables by simply changing the column and row data, while also maintaining consistency in design.
 
@@ -152,7 +152,7 @@ MapView:
     on_touch_down: root.add_marker(*args) # *args passes the information about the touch event
 ```
 
-Kivy can generates a blank interactive map using the openstreetmap application programming interface (API) through the MapView class. The code above defines a map that is centered round `.kv lat` latitude and `.kv lon` longitude, and the `.kv root.add_marker()` method will be called upon the map being touched.
+Kivy can generates a blank interactive map using the openstreetmap application programming interface (API) through the MapView class. The code above defines a map that is centered round ```lat``` latitude and `lon` longitude, and the `root.add_marker()` method will be called upon the map being touched.
 
 This method again highlights the benefits of using kivy. Instead of manually requesting an API key from openstreetmap and creating the code necessary to display the map, kivy can do that with a short piece of code without the developer ever needing to directly communicate with openstreetmap.
 
@@ -171,7 +171,8 @@ def on_pre_enter(self, *args):
 
 The code above shows that upon entering the screen that has the map, the program will retrieve the position of each restaurant from the database and create a corresponding MapMarker object on the map.
 
-To save space on the database by having less columns and data points, the coordinate of the restaurants are stored togther in the form of "latitude;longitude". Once retrieve from the database, this information will be split into the `.py lat` and `.py lon` variable through the built-in `.py .split()` method for python strings.
+To save space on the database by having less columns and data points, the coordinate of the restaurants are stored togther in the form of "latitude;longitude". Once retrieve from the database, this information will be split into the `lat` and `lon` variable through the built-in `split()` method for python strings to be used to generat the map marker for the restaurant.
+
 
 ```.py
     def add_marker(self, instance, touch):
