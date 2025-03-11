@@ -111,7 +111,7 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 | 34 | Add additional comments to clarify my code | Increase ease of possible future modifications | 20 minutes | March 11 | D |
 | 35 | Meet client for final evaluation | Client confirms that the program fulfills every success criteria | 20 minutes | March 11 | A/D |
 
-[^4]: KivyMD. (n.d.-b). Welcome to KivyMD’s documentation! — KivyMD 0.104.2.dev0 documentation. Kivymd.readthedocs.io. https://kivymd.readthedocs.io/en/latest/
+[^6]: KivyMD. (n.d.-b). Welcome to KivyMD’s documentation! — KivyMD 0.104.2.dev0 documentation. Kivymd.readthedocs.io. https://kivymd.readthedocs.io/en/latest/
 # Criterion C: Development
 
 ## Success Criteria 4 & 5: Inheriting template classes to allow user-friendly access to the database.
@@ -136,7 +136,7 @@ This is great way to display the database information because the code for the g
 
 Constructing the tables through this method not only allows for the current tables to have a consistent style, it also allows developers to easily add additional tables by simply changing the column and row data, while also maintaining consistency in design.
 
-`.py self.row_data` can be retrieved directly from the SQLite database through the `.py get_row_data` method, which queries the database on the row data.
+`self.row_data` can be retrieved directly from the SQLite database through the `get_row_data` method, which queries the database on the row data.
 ```.py
     def get_row_data(self):
         db = DatabaseManager('database.db') # connect with the database
@@ -147,7 +147,7 @@ Constructing the tables through this method not only allows for the current tabl
 
 To keep the style consistent and limit the number of possible error points, the screens that display the data for employees can each be a class that inherits from a template class that allows them to display different data by having different values for keyword arguments upon initialization.
 
-Inherited classes were used instead of class instances because kivyMD requires that each screen needs to be initialized by a python class of the same name [^4]. Therefore, an instance would possibly cause errors with kivyMD, and class that inherits from template were used instead.
+Inherited classes were used instead of class instances because kivyMD requires that each screen needs to be initialized by a python class of the same name [^6]. Therefore, an instance would possibly cause errors with kivyMD, and class that inherits from template were used instead.
 
 ```.py
 class EmployeeRestaurantList(EmployeeTemplate):
