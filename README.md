@@ -15,18 +15,23 @@ The data storage solution will use SQLite. Relational database tools like SQL ar
 
 ## Success Criteria
 1. The application has a login and register functions for both users and employees.
+   
    **Quote from problem defintion:** "My client said that most importantly, the restaurant can’t keep track of who is making the calls", "there is no one or nothing recording the order"
    
-3. The application allows users to see every detail about food listing.
+2. The application allows users to see every detail about food listing.
+   
    **Quote from the problem definition:** "disagreements usually start because customers do not know what the dishes look like, nor which ingredients were in it"
 
-5. The application allows users to select their location through a map.
+3. The application allows users to select their location through a map
+   
    **Quote from the problem definition:** "And as users usually underestimate the cost of delivery to their location, they usually disagree at the food delivery fees"
    
-7. The application allows users to send their orders to a database which employees have access to.
+4. The application allows users to send their orders to a database which employees have access to.
+   
     **Quote from the problem definition:** "it [order through phones] generally hurts the relationship between the restaurants and customers because there is no one or nothing recording the order"
    
-9. The employee accounts can add or modify food listings to the software and restaurant locations to the map.
+5. The employee accounts can add or modify food listings to the software and restaurant locations to the map.
+   
     **Quote from the problem definition:** "requested that the solution should accommodate for his ever expanding restaurant network and food listings"
 
 # Criterion B: Design
