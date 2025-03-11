@@ -35,6 +35,8 @@ The data storage solution will use SQLite. Relational database tools like SQL ar
     **Quote from the problem definition:** "requested that the solution should accommodate for his ever expanding restaurant network and food listings"
 
 # Criterion B: Design
+
+## Test Plan
 | Test Case | Procedure | Planned Outcome | Success Criteria |
 |:----------|:----------|:----------------|:-----------------|
 | 1 | 1. Run the program and enter `"a"` into `username` on log in screen, and `"a"` into `password`. <br> 2. Stop the program and rerun it. <br> 3. Run the program and register a new account. <br> 4. Use the credentials created in the previous step to log in. | - After the first step, the tester should see a screen with a menu that leads to order lists, food listings, and restaurant list. <br> - When the test ends, the tester is on the user screen with cards that display food listings. | 1 - The application has a login function both for users and employees and a register function for users. |
@@ -60,7 +62,7 @@ Fig x. Flow diagram of the software's method that can send and store customer's 
 ![image](https://github.com/user-attachments/assets/4d99e418-e7dd-45dd-bf90-9334d3abbdc2)
 
 ## ER Diagram
-<img width="1165" alt="image" src="https://github.com/user-attachments/assets/39e9cef4-b210-4736-953d-144f9b30f7b7" />
+<img width="1161" alt="image" src="https://github.com/user-attachments/assets/208ce973-f53b-48d8-8082-95e9a0435329" />
 
 ## UML Diagram
 ![image](https://github.com/user-attachments/assets/c92d6601-33cc-43bc-be9d-b80ee4ecbb55)
