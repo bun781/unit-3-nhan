@@ -412,6 +412,7 @@ The code below shows another instance of how the check is added to convert from 
 
 # Appendix A: Evidence of Client Consultation
 https://docs.google.com/document/d/1gSodrgdrTnLmTiopdA6KxnKPQwl3mLJny-iOdDLhbJc/edit?usp=sharing
-![image](https://github.com/user-attachments/assets/6826aa51-83fe-4065-9795-a9094afaf46b)
+<img width="1079" alt="image" src="https://github.com/user-attachments/assets/1413a11e-1f0a-4fc8-b919-41aad7d0812d" />
+
 
 
