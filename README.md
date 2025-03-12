@@ -410,5 +410,8 @@ The code below shows another instance of how the check is added to convert from 
         self.ids.cart.text = f'View cart: {len(CustomerDashboard.order)} items, ¥{sum(float(re.sub(r"[^0-9.]", "", str(food[0][1]))) for food in CustomerDashboard.order):.2f}'
 ```
 
+# Appendix A: Evidence of Client Consultation
+https://docs.google.com/document/d/1gSodrgdrTnLmTiopdA6KxnKPQwl3mLJny-iOdDLhbJc/edit?usp=sharing
+![image](https://github.com/user-attachments/assets/6826aa51-83fe-4065-9795-a9094afaf46b)
 
 
